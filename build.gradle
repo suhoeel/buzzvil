@@ -6,6 +6,9 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.40.5'
     }
+    repositories {
+        google()
+    }
 }
 plugins {
     id 'com.android.application' version '7.1.1' apply false

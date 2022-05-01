@@ -1,6 +1,6 @@
 package com.buzzvil.campaign.network.adapter
 
-import com.buzzvil.campaign.data.response.NetworkResponse
+import com.buzzvil.campaign.domain.response.base.NetworkResponse
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Retrofit

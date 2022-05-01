@@ -5,7 +5,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
 
-class OkHttpInterceptor @Inject constructor() : Interceptor {
+class ApisInterceptor @Inject constructor() : Interceptor {
 
     companion object {
         const val TAG = "OkHttpInterceptor"

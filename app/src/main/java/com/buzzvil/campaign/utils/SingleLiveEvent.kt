@@ -8,27 +8,24 @@ import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {
+
     private val mPending = AtomicBoolean(false)
 
+    companion object {
+        private val TAG = "SingleLiveEvent"
+    }
+
+    @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
         if (hasActiveObservers()) {
             Log.w(TAG, "Multiple observers registered but only one will be notified of changes.")
         }
-
-        super.observe(owner) {
+        // Observe the internal MutableLiveData
+        super.observe(owner) { t ->
             if (mPending.compareAndSet(true, false)) {
-                observer.onChanged(it)
+                observer.onChanged(t)
             }
         }
-    }
-
-    override fun postValue(value: T?) {
-        mPending.set(true)
-        super.postValue(value)
-    }
-
-    fun callAsync() {
-        postValue(null)
     }
 
     @MainThread
@@ -37,12 +34,22 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
         super.setValue(t)
     }
 
+    override fun postValue(value: T?) {
+        mPending.set(true)
+        super.postValue(value)
+    }
+
+    /**
+     * Used for cases where T is Void, to make calls cleaner.
+     */
+
     @MainThread
     fun call() {
         value = null
     }
 
-    companion object {
-        private const val TAG = "SingleLiveEvent"
+    fun callAsync() {
+        postValue(null)
     }
+
 }

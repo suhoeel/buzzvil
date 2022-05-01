@@ -1,27 +1,33 @@
 package com.buzzvil.campaign.di
 
 import com.buzzvil.campaign.BuildConfig
-import com.buzzvil.campaign.network.OkHttpInterceptor
+import com.buzzvil.campaign.network.ApisInterceptor
 import com.buzzvil.campaign.network.adapter.NetworkResponseAdapterFactory
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     @Provides
-    fun provideHttpInterceptor(): OkHttpClient {
+    @Singleton
+    fun provideApiInterceptor() : ApisInterceptor = ApisInterceptor()
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(
+        interceptor: ApisInterceptor
+    ): OkHttpClient {
         val client = OkHttpClient.Builder()
-            .addNetworkInterceptor(OkHttpInterceptor())
+            .addNetworkInterceptor(interceptor)
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(15, TimeUnit.SECONDS)
@@ -30,6 +36,7 @@ object NetworkModule {
     }
 
     @Provides
+    @Singleton
     fun provideRetrofitInstance(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.API_SERVER_TEST)

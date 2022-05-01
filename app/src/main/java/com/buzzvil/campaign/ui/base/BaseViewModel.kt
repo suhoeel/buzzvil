@@ -1,12 +1,12 @@
 package com.buzzvil.campaign.ui.base
 
 import androidx.lifecycle.ViewModel
-import com.buzzvil.campaign.data.response.ErrorResponse
-import com.buzzvil.campaign.data.response.NetworkResponse
+import com.buzzvil.campaign.domain.response.base.NetworkResponse
 import com.buzzvil.campaign.utils.SingleLiveEvent
+import okhttp3.ResponseBody
 
 abstract class BaseViewModel : ViewModel() {
-    val apiError = SingleLiveEvent<ErrorResponse>()
+    val apiError = SingleLiveEvent<ResponseBody>()
     val networkError = SingleLiveEvent<Exception>()
     val unknownError = SingleLiveEvent<Throwable?>()
 
@@ -15,14 +15,14 @@ abstract class BaseViewModel : ViewModel() {
     val stateSuccess = SingleLiveEvent<Void>()
     val stateFailure = SingleLiveEvent<Void>()
 
-    protected fun <T : Any> NetworkResponse<T, ErrorResponse>.digest(): T? {
+    protected fun <T : Any> NetworkResponse<T, ResponseBody>.digest(): T? {
         return when (this) {
             is NetworkResponse.ApiError -> {
-                apiError.postValue(
+                /*apiError.postValue(
                     ErrorResponse(false,
                     this.code.toString(),
                     this.body?.message ?: "")
-                )
+                )*/
                 complete()
                 failure()
                 null

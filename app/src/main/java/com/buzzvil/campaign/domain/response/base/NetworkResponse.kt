@@ -1,4 +1,4 @@
-package com.buzzvil.campaign.data.response
+package com.buzzvil.campaign.domain.response.base
 
 import java.io.IOException
 

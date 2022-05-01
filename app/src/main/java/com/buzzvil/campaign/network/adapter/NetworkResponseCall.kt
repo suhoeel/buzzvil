@@ -1,6 +1,7 @@
 package com.buzzvil.campaign.network.adapter
 
-import com.buzzvil.campaign.data.response.NetworkResponse
+import android.util.Log
+import com.buzzvil.campaign.domain.response.base.NetworkResponse
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout
@@ -21,6 +22,10 @@ internal class NetworkResponseCall<S : Any, E : Any>(
                 val body = response.body()
                 val code = response.code()
                 val error = response.errorBody()
+
+                Log.d("TEST", "body $body")
+                Log.d("TEST", "code $code")
+                Log.d("TEST", "error $error")
 
                 if (response.isSuccessful) {
                     if (body != null) {
@@ -65,6 +70,8 @@ internal class NetworkResponseCall<S : Any, E : Any>(
             }
 
             override fun onFailure(call: Call<S>, throwable: Throwable) {
+                Log.d("TEST", "throwable $${throwable.message}")
+
                 val networkResponse = when (throwable) {
                     is IOException -> NetworkResponse.NetworkError(throwable)
                     else -> NetworkResponse.UnknownError(throwable)

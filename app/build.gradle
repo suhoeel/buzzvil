@@ -36,7 +36,7 @@ android {
         dev {
             dimension "target"
             applicationIdSuffix = ".debug"
-            buildConfigField(STRING, API_SERVER_TEST, "\"https://s3-ap-northeast1.amazonaws.com/buzzvi.test/\"")
+            buildConfigField(STRING, API_SERVER_TEST, "\"https://s3-ap-northeast-1.amazonaws.com/buzzvi.test/\"")
         }
 
     }
@@ -107,12 +107,11 @@ dependencies {
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
 
     def room_version = "2.4.2"
-    implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
-//    kapt "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
-    def paging_version = "3.1.1"
-    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+//    def paging_version = "3.1.1"
+//    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
     def nav_version = "2.4.2"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -120,8 +119,8 @@ dependencies {
     implementation "androidx.core:core-ktx:1.7.0"
 
     def hilt_version = "2.38.1"
-    // hilt - Dependency Injection, https://developer.android.com/training/dependency-injection
     implementation "com.google.dagger:hilt-android:$hilt_version"
-//    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.1.0"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+//    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.1.0"
+
 }

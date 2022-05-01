@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
-import com.buzzvil.campaign.data.response.ErrorResponse
 import com.buzzvil.campaign.ui.base.BaseViewModel
+import okhttp3.ResponseBody
 
 abstract class BaseFragment<V : BaseViewModel, B : ViewBinding> : Fragment() {
     protected abstract val viewModel: V
@@ -16,7 +16,7 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewBinding> : Fragment() {
     private var _binding: B? = null
     val binding: B get() = _binding!!
 
-    open val apiErrorObserver: Observer<ErrorResponse> = Observer { errorResponse ->
+    open val apiErrorObserver: Observer<ResponseBody> = Observer { errorResponse ->
 
     }
     open val networkErrorObserver: Observer<Exception> = Observer {
@@ -60,13 +60,11 @@ abstract class BaseFragment<V : BaseViewModel, B : ViewBinding> : Fragment() {
 
         init()
         observe()
-        bind()
         viewModel.init()
     }
 
     open fun init() {}
     abstract fun observe()
-    abstract fun bind()
 
     open fun onProgressStart() {}
     open fun onComplete() {}

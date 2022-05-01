@@ -6,9 +6,12 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import com.buzzvil.campaign.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -46,14 +49,22 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             showSoftwareKeyboard(false)
             when (destination.id) {
-                // all gone
-                /*R.id. -> {
-                    binding.indicator.setType(Type.GONE)
-                    binding.buttonBack.setType(Type.GONE)
-                    binding.borrowBottomNavigationView.setBottomLayout(Mode.GONE)
-                }*/
+                R.id.mainFragment -> {
+                    binding.viewLoading.isVisible = false
+                    binding.buttonBack.isVisible = false
+                }
             }
         }
+
+    }
+
+    fun splashDone() {
+        splashScreen.setKeepOnScreenCondition { false }
+    }
+
+    fun setLoadingProgress(isVisible: Boolean) {
+        binding.viewLoading.isVisible = isVisible
+        binding.viewLoading.setOnClickListener {  }
     }
 
 
