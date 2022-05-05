@@ -14,30 +14,13 @@ class ApisInterceptor @Inject constructor() : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val original = chain.request()
 
-        /*val request = original.newBuilder()
-            .header("Content-Type", "application/json")
-            .build()*/
-
-//        var accessToken: String? = null
-
         val url = original.url.toString()
 
-        val requestWithToken = original.newBuilder()
+        val request = original.newBuilder()
             .header("Content-Type", "application/json")
             .build()
 
-        /*val requestWithToken = if(accessToken != null) {
-            original.newBuilder()
-                .header("Authorization", "Bearer $accessToken")
-                .header("Content-Type", "application/json")
-                .build()
-        } else {
-            val requestWithToken = original.newBuilder()
-                .header("Content-Type", "application/json")
-                .build()
-        }*/
-
-        val response = chain.proceed(requestWithToken)
+        val response = chain.proceed(request)
         Log.d(TAG, "request method ${original.method}")
         Log.d(TAG, "request headers ${original.headers}")
         Log.d(TAG, "connection ${chain.connection()}")

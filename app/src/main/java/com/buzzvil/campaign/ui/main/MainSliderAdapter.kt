@@ -3,6 +3,7 @@ package com.buzzvil.campaign.ui.main
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -10,8 +11,10 @@ import com.buzzvil.campaign.domain.model.CampaignEntity
 import com.buzzvil.campaign.databinding.ItemMainSliderBinding
 
 class MainSliderAdapter(
-    private val data: List<CampaignEntity>
-) : RecyclerView.Adapter<MainSliderAdapter.ViewPagerViewHolder>() {
+    private var data: List<CampaignEntity>
+) : ListAdapter<CampaignEntity, MainSliderAdapter.ViewPagerViewHolder>(
+    CampaignDiffer
+) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -43,9 +46,9 @@ class MainSliderAdapter(
 
             Log.d("TEST", "campaign $campaignEntity")
             Glide.with(binding.root.context)
-                .load(campaignEntity.bitmap ?: campaignEntity.imageUrl)
+                .load(campaignEntity.bitmap!!)
 //                .error(R.drawable.ic_baseline_error_outline_24)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(binding.imageView)
 
         }

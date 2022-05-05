@@ -23,7 +23,8 @@ object CampaignMapper {
             imageUrl = campaign.imageUrl,
             bitmap = campaign.bitmap,
             firstDisplayPriority = campaign.firstDisplayPriority,
-            firstDisplayWeight = campaign.firstDisplayWeight
+            firstDisplayWeight = campaign.firstDisplayWeight,
+            subscribe = false
         )
     }
 }

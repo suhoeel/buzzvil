@@ -12,5 +12,6 @@ data class CampaignEntity(
     @ColumnInfo(name = "imageUrl") val imageUrl: String,
     @ColumnInfo(name = "bitmap") val bitmap: Bitmap?,
     @ColumnInfo(name = "firstDisplayPriority") val firstDisplayPriority: Int,
-    @ColumnInfo(name = "firstDisplayWeight") val firstDisplayWeight: Int
+    @ColumnInfo(name = "firstDisplayWeight") val firstDisplayWeight: Int,
+    @ColumnInfo(name = "subscribe") val subscribe: Boolean
 )

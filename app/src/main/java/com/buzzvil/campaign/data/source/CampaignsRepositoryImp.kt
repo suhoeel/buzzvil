@@ -5,17 +5,16 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.buzzvil.campaign.data.CampaignMapper
-import com.buzzvil.campaign.domain.model.CampaignEntity
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import javax.inject.Inject
 import com.buzzvil.campaign.data.Result
-import com.buzzvil.campaign.domain.response.base.NetworkResponse
 import com.buzzvil.campaign.data.source.local.CampaignsDao
 import com.buzzvil.campaign.di.IODispatcher
+import com.buzzvil.campaign.domain.model.CampaignEntity
+import com.buzzvil.campaign.domain.response.base.NetworkResponse
 import com.buzzvil.campaign.network.CampaignsApi
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.io.IOException
+import java.net.URL
+import javax.inject.Inject
 
 
 class CampaignsRepositoryImp @Inject constructor(
@@ -51,7 +50,7 @@ class CampaignsRepositoryImp @Inject constructor(
     override suspend fun getAds(): Result<List<CampaignEntity>> = withContext(Dispatchers.IO) {
         val currentAds = campaignsDao.getAll()
         if (currentAds.isNotEmpty()) {
-            Log.d("TEST", "cache ooooooo")
+            Log.d("TEST", "disk cached")
             return@withContext Result.Success(currentAds)
         }
         val res = campaignsApi.getAds()
@@ -59,14 +58,13 @@ class CampaignsRepositoryImp @Inject constructor(
             is NetworkResponse.Success -> {
                 val campaignEntities = ArrayList<CampaignEntity>()
                 val ads = res.body.campaigns
-                for(i in ads) {
-                    val campaign = CampaignMapper.adToCampaign(
-                        i,
-                        getImageFromUrl(i.imageUrl)
-                    )
-                    campaignEntities.add(CampaignMapper.campaignToCampaignEntity(campaign))
-
-                }
+                ads.map {
+                    async(coroutineContext) {
+                        val bitmap = downloadImageFromUrl(it.imageUrl)
+                        val campaign = CampaignMapper.adToCampaign(it, bitmap)
+                        campaignEntities.add(CampaignMapper.campaignToCampaignEntity(campaign))
+                    }
+                }.awaitAll()
                 campaignsDao.insertAll(campaignEntities)
                 return@withContext Result.Success(campaignEntities)
             }
@@ -88,13 +86,17 @@ class CampaignsRepositoryImp @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    private suspend fun getImageFromUrl(url: String): Bitmap? = withContext(ioDispatcher) {
+    /*private suspend fun getImageFromUrl(url: String): Bitmap? = withContext(ioDispatcher) {
         val isSuccess = campaignsApi.downloadImage(url)
         if (isSuccess is NetworkResponse.Success) {
 //                Log.d("TEST", "image : ${i.name}, byte : ${isSuccess.body.byteStream()}")
             return@withContext BitmapFactory.decodeStream(isSuccess.body.byteStream())
         }
         return@withContext null
+    }*/
+
+    private fun downloadImageFromUrl(url: String): Bitmap {
+        return BitmapFactory.decodeStream(URL(url).openConnection().getInputStream())
     }
 
     override suspend fun saveAds(campaignEntities: List<CampaignEntity>) {

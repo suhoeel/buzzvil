@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        splashScreen.setKeepOnScreenCondition { true }
+//        splashScreen.setKeepOnScreenCondition { true }
 
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -58,9 +58,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun splashDone() {
+    /*fun splashDone() {
         splashScreen.setKeepOnScreenCondition { false }
-    }
+    }*/
 
     fun setLoadingProgress(isVisible: Boolean) {
         binding.viewLoading.isVisible = isVisible

@@ -1,6 +1,7 @@
 package com.buzzvil.campaign.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,12 +30,15 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
                     (requireActivity() as MainActivity).setLoadingProgress(true)
                 }
                 is Result.Success -> {
-                    with(requireActivity() as MainActivity) {
-                        setLoadingProgress(false)
-                        splashDone()
-                    }
+                    Log.d("TEST", "campaigns ${result.data}")
+//                    mainSliderAdapter.submitList(result.data)
                     mainSliderAdapter = MainSliderAdapter(result.data)
                     setUpViewPager()
+                    with(requireActivity() as MainActivity) {
+                        setLoadingProgress(false)
+//                        splashDone()
+                    }
+
                 }
                 else -> {
                     (requireActivity() as MainActivity).setLoadingProgress(false)

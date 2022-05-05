@@ -35,7 +35,6 @@ class GetCampaignsUseCase constructor(
             (campaignsRepository.getAds() as Result.Success).data
         }.sortedWith(comparator)
 
-        Log.d("TEST", "ads ${ads}")
 
         /*val articles = withContext(ioDispatcher) {
             (campaignsRepository.getArticles() as Result.Success).data
