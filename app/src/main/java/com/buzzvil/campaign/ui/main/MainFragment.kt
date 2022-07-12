@@ -31,9 +31,7 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
                 }
                 is Result.Success -> {
                     Log.d("TEST", "campaigns ${result.data}")
-//                    mainSliderAdapter.submitList(result.data)
-                    mainSliderAdapter = MainSliderAdapter(result.data)
-                    setUpViewPager()
+                    mainSliderAdapter.submitList(result.data)
                     with(requireActivity() as MainActivity) {
                         setLoadingProgress(false)
 //                        splashDone()
@@ -50,11 +48,11 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        mainSliderAdapter = MainSliderAdapter()
+        setUpViewPager()
     }
 
     private fun setUpViewPager() {
-
         binding.viewPager.adapter = mainSliderAdapter
 
         //set the orientation of the viewpager using ViewPager2.orientation

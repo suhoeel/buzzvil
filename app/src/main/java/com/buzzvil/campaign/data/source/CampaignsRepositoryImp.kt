@@ -12,6 +12,7 @@ import com.buzzvil.campaign.domain.model.CampaignEntity
 import com.buzzvil.campaign.domain.response.base.NetworkResponse
 import com.buzzvil.campaign.network.CampaignsApi
 import kotlinx.coroutines.*
+import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.net.URL
 import javax.inject.Inject
@@ -47,22 +48,26 @@ class CampaignsRepositoryImp @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getAds(): Result<List<CampaignEntity>> = withContext(Dispatchers.IO) {
-        val currentAds = campaignsDao.getAll()
+    override suspend fun getAds(): Result<List<CampaignEntity>> = withContext(ioDispatcher) {
+        /*val currentAds = campaignsDao.getAll()
         if (currentAds.isNotEmpty()) {
             Log.d("TEST", "disk cached")
             return@withContext Result.Success(currentAds)
-        }
+        }*/
         val res = campaignsApi.getAds()
         when (res) {
             is NetworkResponse.Success -> {
                 val campaignEntities = ArrayList<CampaignEntity>()
                 val ads = res.body.campaigns
                 ads.map {
-                    async(coroutineContext) {
+                    async {
+                        Log.d("TEST", "ad name ${it.name}")
                         val bitmap = downloadImageFromUrl(it.imageUrl)
+                        Log.d("TEST", "bitmap width ${bitmap.width}")
+                        Log.d("TEST", "bitmap height ${bitmap.height}")
                         val campaign = CampaignMapper.adToCampaign(it, bitmap)
                         campaignEntities.add(CampaignMapper.campaignToCampaignEntity(campaign))
+                        Log.d("TEST", "currentThread ${Thread.currentThread().name}")
                     }
                 }.awaitAll()
                 campaignsDao.insertAll(campaignEntities)

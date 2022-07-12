@@ -3,24 +3,16 @@ package com.buzzvil.campaign.domain
 import android.util.Log
 import com.buzzvil.campaign.data.Result
 import com.buzzvil.campaign.data.source.CampaignsRepository
+import com.buzzvil.campaign.data.succeeded
 import com.buzzvil.campaign.di.IODispatcher
 import com.buzzvil.campaign.domain.model.CampaignEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import kotlin.random.Random
 
 class GetCampaignsUseCase constructor(
-    private val campaignsRepository: CampaignsRepository,
-    @IODispatcher private val ioDispatcher: CoroutineDispatcher
+    private val campaignsRepository: CampaignsRepository
 ) {
-
-
-    fun getAds() {
-
-    }
-
-    fun getArticles() {
-
-    }
 
     //    ratio: String, ads: List<Campaign>, articles: List<Campaign>
     suspend operator fun invoke(): Result<List<CampaignEntity>> {
@@ -29,12 +21,15 @@ class GetCampaignsUseCase constructor(
             (campaignsRepository.getConfig() as Result.Success).data
         }*/
 
-        val comparator : Comparator<CampaignEntity> = compareBy { it.firstDisplayPriority }
+        val comparator1: Comparator<CampaignEntity> = compareBy { it.firstDisplayPriority }
+        val comparator2: Comparator<CampaignEntity> = compareByDescending { it.firstDisplayWeight }
 
-        val ads = withContext(ioDispatcher) {
-            (campaignsRepository.getAds() as Result.Success).data
-        }.sortedWith(comparator)
-
+        val ads = campaignsRepository.getAds().let {
+            if (it.succeeded) {
+                return@let (it as Result.Success).data.sortedWith(comparator1)
+            }
+            emptyList()
+        }
 
         /*val articles = withContext(ioDispatcher) {
             (campaignsRepository.getArticles() as Result.Success).data
@@ -45,6 +40,14 @@ class GetCampaignsUseCase constructor(
         Log.d("TEST", "ads ${ads}")
         Log.d("TEST", "articles ${articles}")*/
 
-        return Result.Success(ads.ifEmpty { emptyList() })
+        return Result.Success(ads)
+    }
+
+    fun randomAccess() {
+        val catalogue: ArrayList<Any> = arrayListOf()
+        val randomGenerator = Random(catalogue.size)
+
+        val index = randomGenerator.nextInt()
+        val item = catalogue[index]
     }
 }

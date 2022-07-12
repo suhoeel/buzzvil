@@ -1,5 +1,7 @@
 package com.buzzvil.campaign.ui.main
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,12 +9,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.buzzvil.campaign.domain.model.CampaignEntity
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.buzzvil.campaign.databinding.ItemMainSliderBinding
+import com.buzzvil.campaign.domain.model.CampaignEntity
 
-class MainSliderAdapter(
-    private var data: List<CampaignEntity>
-) : ListAdapter<CampaignEntity, MainSliderAdapter.ViewPagerViewHolder>(
+class MainSliderAdapter : ListAdapter<CampaignEntity, MainSliderAdapter.ViewPagerViewHolder>(
     CampaignDiffer
 ) {
 
@@ -34,23 +36,40 @@ class MainSliderAdapter(
         holder: MainSliderAdapter.ViewPagerViewHolder,
         position: Int
     ) {
-        holder.setData(data[position])
+        holder.setData(currentList[position])
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount(): Int = currentList.size
 
-    inner class ViewPagerViewHolder(val binding: ItemMainSliderBinding) :
+    inner class ViewPagerViewHolder(private val binding: ItemMainSliderBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun setData(campaignEntity: CampaignEntity) {
 
             Log.d("TEST", "campaign $campaignEntity")
             Glide.with(binding.root.context)
+                .asBitmap()
                 .load(campaignEntity.bitmap!!)
 //                .error(R.drawable.ic_baseline_error_outline_24)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(binding.imageView)
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
+                        var byteCount = Int.MIN_VALUE
+                        byteCount = resource.allocationByteCount
+                        val sizeInKB = byteCount / 1024
+                        val sizeInMB = sizeInKB / 1024
+                        Log.d("TEST", "${campaignEntity.id},\n" +
+                                "kb : $sizeInKB ,\n" +
+                                "mb : $sizeInMB"
+                        )
+                        binding.imageView.setImageBitmap(resource)
+                    }
 
+                    override fun onLoadCleared(placeholder: Drawable?) {}
+                })
         }
 
     }
