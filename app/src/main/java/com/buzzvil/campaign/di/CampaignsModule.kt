@@ -24,8 +24,8 @@ object CampaignsModule {
 
     @Provides
     @Reusable
-    fun provideGetCampaignsUseCase(campaignsRepository: CampaignsRepository, @IODispatcher ioDispatcher: CoroutineDispatcher): GetCampaignsUseCase {
-        return GetCampaignsUseCase(campaignsRepository, ioDispatcher)
+    fun provideGetCampaignsUseCase(campaignsRepository: CampaignsRepository): GetCampaignsUseCase {
+        return GetCampaignsUseCase(campaignsRepository)
     }
 
 }

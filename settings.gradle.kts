@@ -12,5 +12,9 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+include(
+    ":app"
+)
+rootProject.buildFileName = "build.gradle.kts.kts"
 rootProject.name = "Buzzvil"
-include ':app'
+

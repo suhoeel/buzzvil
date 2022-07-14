@@ -1,22 +1,36 @@
 package com.buzzvil.campaign.ui.main
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.afollestad.materialdialogs.MaterialDialog
 import com.buzzvil.campaign.MainActivity
+import com.buzzvil.campaign.NetworkManager
 import com.buzzvil.campaign.data.Result
 import com.buzzvil.campaign.databinding.FragmentMainBinding
 import com.buzzvil.campaign.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
 
+    companion object {
+        private const val TAG = "MainFragment"
+    }
+
     private lateinit var mainSliderAdapter: MainSliderAdapter
+
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
+
+    @Inject
+    lateinit var networkManager: NetworkManager
 
     override val viewModel: MainViewModel by viewModels()
 
@@ -25,7 +39,7 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
 
     override fun observe() {
         viewModel.campaignEntityList.observe(viewLifecycleOwner) { result ->
-            when(result) {
+            when (result) {
                 is Result.Loading -> {
                     (requireActivity() as MainActivity).setLoadingProgress(true)
                 }
@@ -52,6 +66,23 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
         setUpViewPager()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        networkManager.register(onAvailableCallback = {
+            Log.d(TAG, "INTERNET onAvailable")
+        }, onLost = {
+            Log.d(TAG, "INTERNET onLost")
+        })
+
+        onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
     private fun setUpViewPager() {
         binding.viewPager.adapter = mainSliderAdapter
 
@@ -74,5 +105,11 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
                 }
             }
         )
+    }
+
+    override fun onDestroyView() {
+        onBackPressedCallback.remove()
+        super.onDestroyView()
+
     }
 }

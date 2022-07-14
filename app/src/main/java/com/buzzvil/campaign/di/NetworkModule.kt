@@ -1,11 +1,16 @@
 package com.buzzvil.campaign.di
 
+import android.content.Context
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import com.buzzvil.campaign.BuildConfig
+import com.buzzvil.campaign.NetworkManager
 import com.buzzvil.campaign.network.ApisInterceptor
 import com.buzzvil.campaign.network.adapter.NetworkResponseAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -16,6 +21,15 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    @Provides
+    @Singleton
+    fun provideConnectionStateObserver(@ApplicationContext context: Context): NetworkManager =
+        NetworkManager(context,
+            NetworkRequest.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .build())
 
     @Provides
     @Singleton

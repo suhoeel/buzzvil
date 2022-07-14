@@ -47,9 +47,14 @@ class MainSliderAdapter : ListAdapter<CampaignEntity, MainSliderAdapter.ViewPage
         fun setData(campaignEntity: CampaignEntity) {
 
             Log.d("TEST", "campaign $campaignEntity")
+            setImageResource(campaignEntity.bitmap)
+            binding.textView.text = campaignEntity.name
+        }
+
+        fun setImageResource(bitmap: Bitmap) {
             Glide.with(binding.root.context)
                 .asBitmap()
-                .load(campaignEntity.bitmap!!)
+                .load(bitmap)
 //                .error(R.drawable.ic_baseline_error_outline_24)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(object : CustomTarget<Bitmap>() {
@@ -61,9 +66,10 @@ class MainSliderAdapter : ListAdapter<CampaignEntity, MainSliderAdapter.ViewPage
                         byteCount = resource.allocationByteCount
                         val sizeInKB = byteCount / 1024
                         val sizeInMB = sizeInKB / 1024
-                        Log.d("TEST", "${campaignEntity.id},\n" +
-                                "kb : $sizeInKB ,\n" +
-                                "mb : $sizeInMB"
+                        Log.d(
+                            "TEST",
+                            "kb : $sizeInKB ,\n" +
+                                    "mb : $sizeInMB"
                         )
                         binding.imageView.setImageBitmap(resource)
                     }

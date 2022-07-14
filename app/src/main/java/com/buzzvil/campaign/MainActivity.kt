@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import com.buzzvil.campaign.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -22,6 +23,9 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
     lateinit var navHostFragment: NavHostFragment
+
+    @Inject
+    lateinit var networkManager: NetworkManager
 
     private fun showSoftwareKeyboard(showKeyboard: Boolean) {
         currentFocus?.let {
@@ -44,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
         val navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -57,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
     /*fun splashDone() {
         splashScreen.setKeepOnScreenCondition { false }

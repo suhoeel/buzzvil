@@ -1,11 +1,83 @@
+import dependencies.Dependencies
+
+
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
-    id 'androidx.navigation.safeargs.kotlin'
+    id(BuildPlugins.ANDROID_APPLICATION)
+    id(BuildPlugins.KOTLIN_ANDROID)
+    kotlin(BuildPlugins.KAPT)
+    id(BuildPlugins.HILT)
+    id(BuildPlugins.NAVIGATION_SAFE_ARGS)
 }
-apply plugin: 'kotlin-android'
+
+android {
+    compileSdk = BuildAndroidConfig.COMPILE_SDK_VERSION
+
+    defaultConfig {
+        applicationId = BuildAndroidConfig.APPLICATION_ID
+        minSdk = BuildAndroidConfig.MIN_SDK_VERSION
+        targetSdk = BuildAndroidConfig.TARGET_SDK_VERSION
+        versionCode = BuildAndroidConfig.VERSION_CODE
+        versionName = BuildAndroidConfig.VERSION_NAME
+        testInstrumentationRunner = BuildAndroidConfig.TEST_INSTRUMENTATION_RUNNER
+    }
+
+    buildTypes {
+        getByName(BuildType.RELEASE) {
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            isMinifyEnabled = BuildTypeRelease.isMinifyEnabled
+        }
+
+        getByName(BuildType.DEBUG) {
+            applicationIdSuffix = BuildTypeDebug.applicationIdSuffix
+            versionNameSuffix = BuildTypeDebug.versionNameSuffix
+            isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    sourceSets {
+        getByName("main") {
+            java.srcDir("src/main/kotlin")
+        }
+        getByName("test") {
+            java.srcDir("src/test/kotlin")
+        }
+        getByName("androidTest") {
+            java.srcDir("src/androidTest/kotlin")
+        }
+    }
+
+    viewBinding {
+        isEnabled = true
+    }
+}
+
+dependencies {
+    implementation(Dependencies.CORE_KTX)
+    implementation(Dependencies.APPCOMPAT)
+    implementation(Dependencies.MATERIAL)
+    implementation(Dependencies.HILT)
+//    implementation(Dependencies.CONSTRAIN_LAYOUT)
+//    implementation(Dependencies.CONSTRAIN_LAYOUT)
+    kapt(Dependencies.HILT_COMPILER)
+
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+}
+
+
+/*
+
 
 android {
     compileSdk 32
@@ -55,21 +127,21 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.core:core-ktx:1.8.0'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
-    implementation 'androidx.core:core-splashscreen:1.0.0-beta02'
+    implementation 'androidx.core:core-splashscreen:1.0.0-rc01'
 
     // view model and live data
     def lifecycle_version = "2.4.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
@@ -80,11 +152,13 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
 
-    /*
+    */
+/*
      Copyright (C) 2018 Aidan Follestad
      Licensed under the Apache License Version 2.0
      https://github.com/afollestad/material-dialogs
-     */
+     *//*
+
     def material_dialog_version = "3.2.1"
     implementation "com.afollestad.material-dialogs:core:$material_dialog_version"
     implementation "com.afollestad.material-dialogs:input:$material_dialog_version"
@@ -123,4 +197,4 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 //    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.1.0"
 
-}
+}*/

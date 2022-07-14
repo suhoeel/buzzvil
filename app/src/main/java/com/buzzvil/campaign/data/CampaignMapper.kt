@@ -6,7 +6,7 @@ import com.buzzvil.campaign.domain.model.Campaign
 import com.buzzvil.campaign.domain.model.CampaignEntity
 
 object CampaignMapper {
-    fun adToCampaign(ad: Ad, bitmap: Bitmap?): Campaign {
+    fun adToCampaign(ad: Ad, bitmap: Bitmap): Campaign {
         return Campaign(
             id = ad.id,
             name = ad.name,

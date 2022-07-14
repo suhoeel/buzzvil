@@ -35,14 +35,12 @@ class NetworkManager @Inject constructor(
 
     override fun onAvailable(network: Network) {
         super.onAvailable(network)
-        Log.d("TEST", "INTERNET onAvailable")
         onAvailableCallback?.invoke()
     }
 
     override fun onLost(network: Network) {
         super.onLost(network)
         onLost?.invoke()
-        Log.d("TEST", "INTERNET onLost")
     }
 
     override fun onUnavailable() {
