@@ -6,16 +6,37 @@ object Dependencies {
     const val APPCOMPAT = "androidx.appcompat:appcompat:${BuildDependenciesVersions.APPCOMPAT}"
     const val MATERIAL = "com.google.android.material:material:${BuildDependenciesVersions.MATERIAL}"
     const val CONSTRAIN_LAYOUT = "androidx.constraintlayout:constraintlayout:${BuildDependenciesVersions.CONSTRAIN_LAYOUT}"
-    const val HILT = "com.google.dagger:hilt-android:${BuildDependenciesVersions.HILT}"
+    const val HILT_ANDROID = "com.google.dagger:hilt-android:${BuildDependenciesVersions.HILT}"
     const val HILT_COMPILER = "com.google.dagger:hilt-compiler:${BuildDependenciesVersions.HILT}"
 
-    const val VIEW_PAGER = ""
-    const val SPLASH_SCREEN= ""
-    const val COROUTINE = ""
-    const val COROUTINE_CORE = ""
-//    const val  = ""
-//    const val  = ""
+    const val VIEW_PAGER = "androidx.viewpager2:viewpager2:${BuildDependenciesVersions.VIEW_PAGER}"
+    const val SPLASH_SCREEN= "androidx.core:core-splashscreen:${BuildDependenciesVersions.SPLASH_SCREEN}"
+    const val COROUTINE_CORE = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${BuildDependenciesVersions.COROUTINE}"
+    const val COROUTINE_ANDROID = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${BuildDependenciesVersions.COROUTINE}"
 
+    const val GLIDE = "com.github.bumptech.glide:glide:${BuildDependenciesVersions.GLIDE}"
+    const val GLIDE_COMPILER = "com.github.bumptech.glide:compiler:${BuildDependenciesVersions.GLIDE}"
+
+    const val NAVIGATION_FRAGMENT_KTX = "androidx.navigation:navigation-fragment-ktx:${BuildDependenciesVersions.NAVIGATION}"
+    const val NAVIGATION_UI_KTX = "androidx.navigation:navigation-ui-ktx:${BuildDependenciesVersions.NAVIGATION}"
+    const val PAGING = "androidx.paging:paging-runtime-ktx:${BuildDependenciesVersions.PAGING}"
+    const val ROOM = "androidx.room:room-ktx:${BuildDependenciesVersions.ROOM}"
+    const val ROOM_COMPILER = "androidx.room:room-compiler:${BuildDependenciesVersions.ROOM}"
+
+
+    const val RETROFIT = "com.squareup.retrofit2:retrofit:${BuildDependenciesVersions.RETROFIT}"
+    const val RETROFIT_GSON_CONVERTER = "com.squareup.retrofit2:converter-gson:${BuildDependenciesVersions.RETROFIT}"
+
+    const val RECYCLER_VIEW = "androidx.recyclerview:recyclerview:${BuildDependenciesVersions.RECYCLER_VIEW}"
+    const val LIFECYCLE_KTX = "androidx.lifecycle:lifecycle-livedata-ktx:${BuildDependenciesVersions.LIFECYCLE}"
+    const val LIFECYCLE_VIEWMODEL_KTX = "androidx.lifecycle:lifecycle-viewmodel-ktx:${BuildDependenciesVersions.LIFECYCLE}"
+    const val LIFECYCLE_RUNTIME_KTX = "androidx.lifecycle:lifecycle-runtime-ktx:${BuildDependenciesVersions.LIFECYCLE}"
+    const val LIFECYCLE_COMPILER = "androidx.lifecycle:lifecycle-compiler:${BuildDependenciesVersions.LIFECYCLE}"
+    const val LIFECYCLE_VIEWMODEL_SAVEDSTATE = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${BuildDependenciesVersions.LIFECYCLE}"
+
+
+    const val OKHTTP = "com.squareup.okhttp3:okhttp:${BuildDependenciesVersions.OKHTTP}"
+    const val OKHTTP_LOGGING = "com.squareup.okhttp3:logging-interceptor:${BuildDependenciesVersions.OKHTTP}"
 
 }
 

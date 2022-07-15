@@ -36,6 +36,7 @@ android {
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -65,10 +66,41 @@ dependencies {
     implementation(Dependencies.CORE_KTX)
     implementation(Dependencies.APPCOMPAT)
     implementation(Dependencies.MATERIAL)
-    implementation(Dependencies.HILT)
-//    implementation(Dependencies.CONSTRAIN_LAYOUT)
-//    implementation(Dependencies.CONSTRAIN_LAYOUT)
+    implementation(Dependencies.CONSTRAIN_LAYOUT)
+    implementation(Dependencies.HILT_ANDROID)
+    implementation(Dependencies.VIEW_PAGER)
+    implementation(Dependencies.SPLASH_SCREEN)
+
+    implementation(Dependencies.COROUTINE_CORE)
+    implementation(Dependencies.COROUTINE_ANDROID)
+
+    implementation(Dependencies.GLIDE)
+
+
+    implementation(Dependencies.NAVIGATION_FRAGMENT_KTX)
+    implementation(Dependencies.NAVIGATION_UI_KTX)
+    implementation(Dependencies.PAGING)
+
+    implementation(Dependencies.ROOM)
+
+
+    implementation(Dependencies.RETROFIT)
+    implementation(Dependencies.RETROFIT_GSON_CONVERTER)
+
+    implementation(Dependencies.RECYCLER_VIEW)
+
+    implementation(Dependencies.LIFECYCLE_KTX)
+    implementation(Dependencies.LIFECYCLE_VIEWMODEL_KTX)
+    implementation(Dependencies.LIFECYCLE_RUNTIME_KTX)
+    implementation(Dependencies.LIFECYCLE_VIEWMODEL_SAVEDSTATE)
+
+    implementation(Dependencies.OKHTTP)
+    implementation(Dependencies.OKHTTP_LOGGING)
+
     kapt(Dependencies.HILT_COMPILER)
+    kapt(Dependencies.GLIDE_COMPILER)
+    kapt(Dependencies.ROOM_COMPILER)
+    kapt(Dependencies.LIFECYCLE_COMPILER)
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

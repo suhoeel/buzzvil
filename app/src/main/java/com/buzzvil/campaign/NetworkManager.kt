@@ -5,12 +5,13 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkRequest
 import android.util.Log
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class NetworkManager @Inject constructor(
-    private val applicationContext: Context,
+    @ApplicationContext private val context: Context,
     private val networkRequest: NetworkRequest
 ) : ConnectivityManager.NetworkCallback() {
 
@@ -19,7 +20,7 @@ class NetworkManager @Inject constructor(
 
 
     fun register(onAvailableCallback: () -> Unit, onLost: () -> Unit) {
-        val connectivityManager = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         connectivityManager.isDefaultNetworkActive
         connectivityManager.registerNetworkCallback(networkRequest, this)
         this.onAvailableCallback = onAvailableCallback
@@ -27,7 +28,7 @@ class NetworkManager @Inject constructor(
     }
 
     fun unregister() {
-        val connectivityManager = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         connectivityManager.unregisterNetworkCallback(this)
         onAvailableCallback = null
         onLost = null

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.buzzvil.campaign.databinding.ItemMainSliderBinding
@@ -56,7 +57,7 @@ class MainSliderAdapter : ListAdapter<CampaignEntity, MainSliderAdapter.ViewPage
                 .asBitmap()
                 .load(bitmap)
 //                .error(R.drawable.ic_baseline_error_outline_24)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .into(object : CustomTarget<Bitmap>() {
                     override fun onResourceReady(
                         resource: Bitmap,

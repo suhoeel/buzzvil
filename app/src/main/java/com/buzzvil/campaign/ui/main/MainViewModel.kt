@@ -34,7 +34,7 @@ class MainViewModel @Inject constructor(
 
     init {
         _campaignEntityList.value = Result.Loading
-        getConfig()
+//        getConfig()
 
     }
 

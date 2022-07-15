@@ -17,7 +17,7 @@ object PluginsVersions {
 }
 
 dependencies {
-    implementation("com.android.tools.build:gradle:${PluginsVersions.GRADLE_ANDROID}")
+    implementation("com.android.tools.build:gradle:7.2.1")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:${PluginsVersions.KOTLIN_ANDROID}")
     implementation("androidx.navigation:navigation-safe-args-gradle-plugin:${PluginsVersions.NAVIGATION}")
     implementation("com.google.dagger:hilt-android-gradle-plugin:${PluginsVersions.HILT}")

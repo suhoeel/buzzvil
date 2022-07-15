@@ -46,6 +46,7 @@ class ExampleUnitTest {
         val time = measureTimeMillis {
             // call your function here
             for (i in 0..100) {
+
                 val totalWeight = (1..imgs.sum())
                 val random = totalWeight.random()
                 var last = 0
@@ -58,6 +59,7 @@ class ExampleUnitTest {
                     last = i
                 }
             }
+
         }
 
         println("${time} millis")
