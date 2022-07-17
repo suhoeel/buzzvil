@@ -8,6 +8,7 @@ object BuildDependenciesVersions {
     const val SPLASH_SCREEN= "1.0.0-rc01"
     const val COROUTINE = "1.6.0"
     const val GLIDE = "4.13.2"
+    const val FRAGMENT = "1.5.0"
     const val NAVIGATION = "2.5.0"
     const val PAGING = "3.1.1"
     const val ROOM = "2.4.2"

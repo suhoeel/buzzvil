@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="0dp"
@@ -15,7 +14,7 @@
         app:layout_constraintTop_toBottomOf="@id/layoutToolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 
@@ -44,7 +43,7 @@
             android:layout_gravity="center"
             android:layout_marginEnd="15dp"
             android:id="@+id/view_loading"
-            android:text="로딩중입니다"
+            android:text=""
             android:textSize="20dp"
             android:textColor="#FFE500"
             android:fontFamily="sans-serif-medium"
@@ -67,5 +66,21 @@
             />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:id="@+id/bottom_navigation"
+        android:background="@color/purple_700"
+        android:layout_gravity="start"
+        app:itemIconSize="20dp"
+        app:itemIconTint="@color/color_navigation"
+        app:itemTextColor="@color/color_navigation"
+        app:menu="@menu/menu_bottom_nav"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintTop_toBottomOf="@id/nav_host_fragment"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,12 +2,46 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/main_fragment"
+    >
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.buzzvil.android.main.MainFragment"
+        android:label="HomeFragment"
+        >
+        <action
+            android:id="@+id/action_main_fragment_to_main_info_fragment"
+            app:destination="@id/main_info_fragment" />
+    </fragment>
 
 
     <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.buzzvil.campaign.ui.main.MainFragment"
-        android:label="MainFragment" />
+        android:id="@+id/main_info_fragment"
+        android:name="com.buzzvil.android.info.InfoFragment"
+        android:label="MainInfoFragment"
+        >
+        <action
+            android:id="@+id/action_main_info_fragment_to_main_fragment"
+            app:popUpTo="@id/main_fragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/main_fragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/favorite_fragment"
+        android:name="com.buzzvil.android.favorite.FavoriteFragment"
+        android:label="FavoriteFragment"
+        >
+        <action
+            android:id="@+id/action_main_fragment_to_main_info_fragment"
+            app:destination="@id/main_info_fragment" />
+    </fragment>
+
+
+
+
 
 </navigation>
+

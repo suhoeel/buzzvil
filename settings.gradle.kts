@@ -13,8 +13,11 @@ dependencyResolutionManagement {
     }
 }
 include(
-    ":app"
+    ":app",
+    ":core",
+    ":commons:ui",
+    ":commons:view"
 )
-rootProject.buildFileName = "build.gradle.kts.kts"
-rootProject.name = "Buzzvil"
+rootProject.buildFileName = "build.gradle.kts"
+//rootProject.name = "Buzzvil"
 

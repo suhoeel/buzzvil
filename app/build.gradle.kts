@@ -1,5 +1,6 @@
 import dependencies.Dependencies
-
+import dependencies.AnnotationProcessorsDependencies
+import extensions.implementation
 
 plugins {
     id(BuildPlugins.ANDROID_APPLICATION)
@@ -31,8 +32,8 @@ android {
         }
 
         getByName(BuildType.DEBUG) {
-            applicationIdSuffix = BuildTypeDebug.applicationIdSuffix
-            versionNameSuffix = BuildTypeDebug.versionNameSuffix
+//            applicationIdSuffix = BuildTypeDebug.applicationIdSuffix
+//            versionNameSuffix = BuildTypeDebug.versionNameSuffix
             isMinifyEnabled = BuildTypeDebug.isMinifyEnabled
         }
     }
@@ -63,44 +64,45 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.CORE_KTX)
+    implementation(project(BuildModules.CORE))
+    implementation(project(BuildModules.Commons.UI))
+
+
     implementation(Dependencies.APPCOMPAT)
     implementation(Dependencies.MATERIAL)
     implementation(Dependencies.CONSTRAIN_LAYOUT)
-    implementation(Dependencies.HILT_ANDROID)
-    implementation(Dependencies.VIEW_PAGER)
     implementation(Dependencies.SPLASH_SCREEN)
-
-    implementation(Dependencies.COROUTINE_CORE)
-    implementation(Dependencies.COROUTINE_ANDROID)
-
-    implementation(Dependencies.GLIDE)
-
-
-    implementation(Dependencies.NAVIGATION_FRAGMENT_KTX)
-    implementation(Dependencies.NAVIGATION_UI_KTX)
-    implementation(Dependencies.PAGING)
+    implementation(Dependencies.HILT_ANDROID)
 
     implementation(Dependencies.ROOM)
+    implementation(Dependencies.ROOM_KTX)
 
+    implementation(Dependencies.COROUTINES)
+    implementation(Dependencies.COROUTINES_ANDROID)
 
     implementation(Dependencies.RETROFIT)
     implementation(Dependencies.RETROFIT_GSON_CONVERTER)
-
-    implementation(Dependencies.RECYCLER_VIEW)
-
-    implementation(Dependencies.LIFECYCLE_KTX)
-    implementation(Dependencies.LIFECYCLE_VIEWMODEL_KTX)
-    implementation(Dependencies.LIFECYCLE_RUNTIME_KTX)
-    implementation(Dependencies.LIFECYCLE_VIEWMODEL_SAVEDSTATE)
-
     implementation(Dependencies.OKHTTP)
     implementation(Dependencies.OKHTTP_LOGGING)
 
-    kapt(Dependencies.HILT_COMPILER)
-    kapt(Dependencies.GLIDE_COMPILER)
-    kapt(Dependencies.ROOM_COMPILER)
-    kapt(Dependencies.LIFECYCLE_COMPILER)
+    implementation(Dependencies.CORE_KTX)
+    implementation(Dependencies.FRAGMENT_KTX)
+    implementation(Dependencies.LIFECYCLE_RUNTIME_KTX)
+    implementation(Dependencies.LIFECYCLE_LIVEDATA_KTX)
+    implementation(Dependencies.LIFECYCLE_VIEWMODEL_KTX)
+    implementation(Dependencies.LIFECYCLE_VIEWMODEL_SAVEDSTATE)
+
+
+    implementation(Dependencies.NAVIGATION_UI_KTX)
+    implementation(Dependencies.NAVIGATION_FRAGMENT_KTX)
+
+    implementation(Dependencies.GLIDE)
+
+    kapt(AnnotationProcessorsDependencies.ROOM_COMPILER)
+
+    kapt(AnnotationProcessorsDependencies.HILT_COMPILER)
+    kapt(AnnotationProcessorsDependencies.GLIDE_COMPILER)
+
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
@@ -115,7 +117,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.buzzvil.campaign"
+        applicationId "com.buzzvil.android"
         minSdk 21
         targetSdk 32
         versionCode 1

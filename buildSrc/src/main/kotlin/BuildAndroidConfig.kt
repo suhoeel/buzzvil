@@ -1,6 +1,6 @@
 object BuildAndroidConfig {
 
-    const val APPLICATION_ID = "com.buzzvil.campaign"
+    const val APPLICATION_ID = "com.buzzvil.android"
 
 //    const val BUILD_TOOLS_VERSION = "29.0.2"
     const val COMPILE_SDK_VERSION = 32
